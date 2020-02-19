@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import './assets/css/Bootstrap.css';
 import './assets/css/style.css';
+
+import Hisotry from './components/History';
 
 const App = () => {
   const [configuration, setConfiguration] = useState(null);
@@ -11,164 +14,77 @@ const App = () => {
   const [spinById, setSpinById] = useState(null);
   const [spinByUuId, setSpinByUuId] = useState(null);
 
-  const configurationApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/configuration'
-  ),
-  statsApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/stats'
-  ),
-  scheduledGamesApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/scheduledGames'
-  ),
-  historyApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/history?limit=37'
-  ),
-  nextGameApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/nextGame'
-  ),
-  spinByIdApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/1405055'
-  ),
-  spinByUuIdApi = fetch(
-    'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee'
-  );
+  const apis = {
+    configurationApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/configuration',
+    statsApi: 'http://dev-games-backend.advbet.com/v1/ab-roulette/1/stats',
+    scheduledGamesApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/scheduledGames',
+    historyApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/history?limit=37',
+    nextGameApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/nextGame',
+    spinByIdApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/1405055',
+    spinByUuIdApi:
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee'
+  };
 
   useEffect(() => {
-
-    configurationApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setConfiguration(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    statsApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setStats(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    scheduledGamesApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setScheduledGames(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    historyApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setHistory(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    nextGameApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setNextGame(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    spinByIdApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setSpinById(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-
-    spinByUuIdApi
-      .then(res => res.json())
-      .then(
-        result => {
-          setSpinByUuId(result);
-        },
-        error => {
-          console.log('ERR ', error);
-        }
-      );
-      
+    Promise.all(Object.values(apis).map(value => fetch(value)))
+      .then(async data => await Promise.all(data.map(e => e.json())))
+      .then(results => {
+        setConfiguration(results[0]);
+        setStats(results[1]);
+        setScheduledGames(results[2]);
+        setHistory(results[3]);
+        setNextGame(results[4]);
+        setSpinById(results[5]);
+        setSpinByUuId(results[6]);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
   }, []);
 
-  console.log('history ', history ? history : null);
-
-  // var timeLeft = 30;
-  // var elem = document.getElementById('some_div');
-  
-  // var timerId = setInterval(countdown, 1000);
-  
-  // function countdown() {
-  //   if (timeLeft == 0) {
-  //     clearTimeout(timerId);
-  //     doSomething();
-  //   } else {
-  //     elem.innerHTML = timeLeft + ' seconds remaining';
-  //     timeLeft--;
-  //   }
-  // }
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="container">
-          <div className="row">
-            <div className="col col-sm-12 col-md-12 pt-30 pb-30">
+    <div className='App'>
+      <header className='App-header'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col col-sm-12 col-md-12 pt-30 pb-30'>
               <h1>Aardvark Roulette game API demo</h1>
             </div>
           </div>
         </div>
       </header>
-      <article className="content">
-        <div className="container">
-          <div className="row">
-            <div className="col col-sm-12 col-md-12">
-              <div className="alert alert-primary" role="alert">
+      <article className='content'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col col-sm-12 col-md-12'>
+              <div className='alert alert-primary' role='alert'>
                 <label>API base URL: </label>{' '}
                 <a
-                  className="alert-link"
-                  href="https://dev-games-backend.advbet.com/v1/ab-roulette/1/"
+                  className='alert-link'
+                  href='https://dev-games-backend.advbet.com/v1/ab-roulette/1/'
                 >
                   https://dev-games-backend.advbet.com/v1/ab-roulette/1/
                 </a>
               </div>
               <h4>Stats (last 200)</h4>
               {/* stats table */}
-              <div className="responsive-table">
-                <table id="stats">
+              <div className='responsive-table'>
+                <table id='stats'>
                   <tbody>
                     <tr>
                       <td>&nbsp;</td>
-                      <th colSpan="5" className="cold">
+                      <th colSpan='5' className='cold'>
                         Cold
                       </th>
-                      <th colSpan="27" className="neutral">
+                      <th colSpan='27' className='neutral'>
                         Neutral
                       </th>
-                      <th colSpan="5" className="hot">
+                      <th colSpan='5' className='hot'>
                         Hot
                       </th>
                     </tr>
@@ -176,7 +92,7 @@ const App = () => {
                       <th>Slot</th>
                       {stats
                         ? stats.map((resultList, index) => (
-                            <td key={index} className="btn-black">
+                            <td key={index} className='btn-black'>
                               {resultList.result}
                             </td>
                           ))
@@ -223,7 +139,7 @@ const App = () => {
                       <th>Hits</th>
                       {stats
                         ? stats.map((countList, index) => (
-                            <td key={index} className="cold">
+                            <td key={index} className='cold'>
                               {countList.count}
                             </td>
                           ))
@@ -269,17 +185,17 @@ const App = () => {
                   </tbody>
                 </table>
               </div>
-              <section className="game-board-and-log">
-                <div className="row">
-                  <div className="col col-sm-12 col-md-6">
+              <section className='game-board-and-log'>
+                <div className='row'>
+                  <div className='col col-sm-12 col-md-6'>
                     <h4>Game board</h4>
-                    <div className="game-board">
+                    <div className='game-board'>
                       {configuration && configuration.positionToId
                         ? configuration.positionToId.map((data, index) => (
                             <button
                               key={index}
                               data-id={`slot-${data}`}
-                              type="button"
+                              type='button'
                               className={`col-xs-1 btn btn-${
                                 configuration && configuration.colors
                                   ? configuration.colors[index]
@@ -292,21 +208,19 @@ const App = () => {
                         : null}
                     </div>
                     <h4>Events</h4>
-                    <div className="event-wrap">
-                      <ul className="event-list-group">
+                    <div className='event-wrap'>
+                      <ul className='event-list-group'>
                         {history
                           ? history.map((event, index) => (
-                              <li key={index} className="list-group-item">
-                                Game {event.id} ended, result is {event.result}
-                              </li>
+                              <Hisotry data={event} key={index} />
                             ))
                           : null}
                       </ul>
                     </div>
                   </div>
-                  <div className="col col-sm-12 col-md-6">
+                  <div className='col col-sm-12 col-md-6'>
                     <h4>Log</h4>
-                    <pre className="log-box">
+                    <pre className='log-box'>
                       2020-02-17T06:55:09.310Z Loading game board <br />
                       2020-02-17T06:55:09.313Z GET .../configuration
                       <br />
