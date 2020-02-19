@@ -3,6 +3,7 @@ import './assets/css/Bootstrap.css';
 import './assets/css/style.css';
 
 const App = () => {
+
   const [configuration, setConfiguration] = useState(null);
   const [stats, setStats] = useState(null);
   const [scheduledGames, setScheduledGames] = useState(null);
@@ -111,10 +112,11 @@ const App = () => {
           console.log('ERR ', error);
         }
       );
-      
+
   }, []);
 
-  console.log('history ', history ? history : null);
+  console.log('configuration ', configuration ? configuration : null);
+  console.log('stats ', stats ? stats : null);
 
   // var timeLeft = 30;
   // var elem = document.getElementById('some_div');
@@ -223,7 +225,7 @@ const App = () => {
                       <th>Hits</th>
                       {stats
                         ? stats.map((countList, index) => (
-                            <td key={index} className="cold">
+                            <td key={index} className={`${index < 5 ? "cold" : "neutral"} ${index > 31 ? "hot" : "neutral"}`}>
                               {countList.count}
                             </td>
                           ))
