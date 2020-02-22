@@ -1,3 +1,8 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -69,4 +74,23 @@ table td {
 .event-list-group {
   padding: 0;
   margin: 0;
+}
+.list-group-item:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+li.calculating {
+  display: none;
+}
+li.old:nth-child(n + 1),
+li.list-group-item.calculating:first-child {
+  display: block;
 }
