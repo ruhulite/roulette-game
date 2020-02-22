@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 
 const Hisotry = props => {
@@ -17,11 +16,11 @@ const Hisotry = props => {
   return (
     <>
       {timeToGo >= 0 ? (
-        <li className="list-group-item calculating">
+        <li className="list-group-item">
           Game {data.id} has started, ends in {timeToGo} sec
         </li>
       ) : (
-        <li className="list-group-item old">
+        <li className="list-group-item">
           Game {data.id} ended, result is {data.result}
         </li>
       )}
