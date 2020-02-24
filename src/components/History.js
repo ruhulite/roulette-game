@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
 const Hisotry = props => {
-  const {data} = props;
+  const { data } = props;
   const [timeToGo, setTimeToGo] = useState(Math.abs(data.startDelta));
 
   useEffect(() => {
