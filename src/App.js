@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/css/Bootstrap.css';
 import './assets/css/style.css';
 
@@ -8,7 +8,7 @@ const App = () => {
   const [configuration, setConfiguration] = useState(null);
   const [stats, setStats] = useState(null);
   const [scheduledGames, setScheduledGames] = useState(null);
-  const [history, setHistory] = useState(null);
+  const [history, setHistory] = useState([]);
   const [nextGame, setNextGame] = useState(null);
   const [spinById, setSpinById] = useState(null);
   const [spinByUuId, setSpinByUuId] = useState(null);
@@ -26,7 +26,7 @@ const App = () => {
     spinByIdApi:
       'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/1405055',
     spinByUuIdApi:
-      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee',
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee'
   };
 
   useEffect(() => {
@@ -36,10 +36,26 @@ const App = () => {
         setConfiguration(results[0]);
         setStats(results[1]);
         setScheduledGames(results[2]);
-        setHistory(results[3]);
+        // setHistory(results[3]);
         setNextGame(results[4]);
         setSpinById(results[5]);
         setSpinByUuId(results[6]);
+
+        let counter = results[3].length;
+        for (let i = 0; i < counter; i++) {
+          setTimeout(() => {
+            const v = results[3][i];
+            setHistory(old => [...old, v]);
+          }, i * 10000);
+        }
+
+        // for (i = -19; i <= 0; i += 1) {
+        //   data.push({
+        //     x: time + i * 1000,
+        //     y: Math.random()
+        //   });
+        // }
+        
       })
       .catch(error => {
         console.log('error', error);
