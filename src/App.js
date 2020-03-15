@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./assets/css/Bootstrap.css";
-import "./assets/css/style.css";
+import React, { useState, useEffect } from 'react';
+import './assets/css/Bootstrap.css';
+import './assets/css/style.css';
 
-import Hisotry from "./components/History";
+import Hisotry from './components/History';
 
 const App = () => {
   const [configuration, setConfiguration] = useState(null);
@@ -15,18 +15,18 @@ const App = () => {
 
   const apis = {
     configurationApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/configuration",
-    statsApi: "http://dev-games-backend.advbet.com/v1/ab-roulette/1/stats",
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/configuration',
+    statsApi: 'http://dev-games-backend.advbet.com/v1/ab-roulette/1/stats',
     scheduledGamesApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/scheduledGames",
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/scheduledGames',
     historyApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/history?limit=37",
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/history?limit=37',
     nextGameApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/nextGame",
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/nextGame',
     spinByIdApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/1405055",
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/1405055',
     spinByUuIdApi:
-      "http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee"
+      'http://dev-games-backend.advbet.com/v1/ab-roulette/1/game/15f493ad-637c-4bbc-69ab-164789e4a4ee'
   };
 
   useEffect(() => {
@@ -49,9 +49,16 @@ const App = () => {
           }, i * 10000);
         }
 
+        // for (i = -19; i <= 0; i += 1) {
+        //   data.push({
+        //     x: time + i * 1000,
+        //     y: Math.random()
+        //   });
+        // }
+        
       })
       .catch(error => {
-        console.log("error", error);
+        console.log('error', error);
       });
   }, []);
 
@@ -71,7 +78,7 @@ const App = () => {
           <div className="row">
             <div className="col col-sm-12 col-md-12">
               <div className="alert alert-primary" role="alert">
-                <label>API base URL: </label>{" "}
+                <label>API base URL: </label>{' '}
                 <a
                   className="alert-link"
                   href="https://dev-games-backend.advbet.com/v1/ab-roulette/1/"
@@ -112,8 +119,8 @@ const App = () => {
                         ? stats.map((countList, index) => (
                             <td
                               key={index}
-                              className={`${index < 5 ? "cold" : "neutral"} ${
-                                index > 31 ? "hot" : "neutral"
+                              className={`${index < 5 ? 'cold' : 'neutral'} ${
+                                index > 31 ? 'hot' : 'neutral'
                               }`}
                             >
                               {countList.count}
@@ -138,7 +145,7 @@ const App = () => {
                               className={`col-xs-1 btn btn-${
                                 configuration && configuration.colors
                                   ? configuration.colors[index]
-                                  : ""
+                                  : ''
                               }`}
                             >
                               {data}
